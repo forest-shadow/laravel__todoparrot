@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TodoList;
 
 class ListsController extends Controller
 {
@@ -13,7 +14,8 @@ class ListsController extends Controller
      */
     public function index()
     {
-        return view('lists.index');
+        $lists = TodoList::all();
+        return view('lists.index')->withLists($lists);
     }
 
     /**
