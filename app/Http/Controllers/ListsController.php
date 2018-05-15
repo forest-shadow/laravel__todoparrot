@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\TodoList;
 
@@ -15,7 +16,7 @@ class ListsController extends Controller
     public function index()
     {
         $lists = TodoList::all();
-        return view('lists.index')->withLists($lists);
+        return view('lists.index')->with('lists', $lists);
     }
 
     /**
@@ -47,7 +48,13 @@ class ListsController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $list = TodoList::findOrFail($id);
+            return view('lists.show')->with('list', $list);
+        } catch(ModelNotFoundException $e) {
+            return redirect()->route('lists.index');
+        }
+
     }
 
     /**
