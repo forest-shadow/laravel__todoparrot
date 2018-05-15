@@ -14,7 +14,7 @@ class AddDoneToTodoListsTable extends Migration
     public function up()
     {
         Schema::table('todo_lists', function (Blueprint $table) {
-            $table->boolean('done');
+            $table->boolean('done')->default(false)->after('description');
         });
     }
 
